@@ -48,7 +48,7 @@ public class PasswordMigrationUtil implements CommandLineRunner {
 				user.setPasswordHash(hashedPassword);
 				userCredsRepository.save(user);
 				
-				System.out.println("Migrated password for user: " + user.getUsername());
+				System.out.println("Migrated password for user: " + user.getEmail());
 				migratedCount++;
 			}
 		}

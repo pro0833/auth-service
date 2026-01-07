@@ -33,13 +33,13 @@ public class AdminController {
 	public ResponseEntity<?> createUser(@RequestBody AuthRequest request) {
 		try {
 			// Check if user already exists
-			if (userCredsRepository.findByUsername(request.getUsername()) != null) {
+			if (userCredsRepository.findByEmail(request.getEmail()) != null) {
 				return ResponseEntity.badRequest().body("Username already exists");
 			}
 
 			// Create new user with hashed password
 			UserCreds newUser = new UserCreds();
-			newUser.setUsername(request.getUsername());
+			newUser.setEmail(request.getEmail());
 			newUser.setPasswordHash(passwordService.encodePassword(request.getPassword()));
 
 			userCredsRepository.save(newUser);
@@ -59,7 +59,7 @@ public class AdminController {
 	@PutMapping("/users/{username}/password")
 	public ResponseEntity<?> updatePassword(@PathVariable String username, @RequestBody AuthRequest request) {
 		try {
-			UserCreds user = userCredsRepository.findByUsername(username);
+			UserCreds user = userCredsRepository.findByEmail(username);
 			if (user == null) {
 				return ResponseEntity.notFound().build();
 			}

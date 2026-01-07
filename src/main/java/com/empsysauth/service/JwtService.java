@@ -26,7 +26,7 @@ public class JwtService {
 	public String authenticate(String username, String password) {
 		logger.debug("Attempting authentication for username: {}", username);
 		
-		UserCreds user = repo.findByUsername(username);
+		UserCreds user = repo.findByEmail(username);
 		
 		if (user == null) {
 			logger.warn("Authentication failed: User '{}' not found", username);

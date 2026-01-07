@@ -28,16 +28,16 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody AuthRequest request) {
 		try {
-			logger.info("Login attempt for username: {}", request.getUsername());
-			String token = jwtService.authenticate(request.getUsername(), request.getPassword());
-			logger.info("Login successful for username: {}", request.getUsername());
+			logger.info("Login attempt for username: {}", request.getEmail());
+			String token = jwtService.authenticate(request.getEmail(), request.getPassword());
+			logger.info("Login successful for username: {}", request.getEmail());
 			return ResponseEntity.ok(new AuthResponse(token));
 		} catch (RuntimeException e) {
-			logger.error("Login failed for username: {} - {}", request.getUsername(), e.getMessage());
+			logger.error("Login failed for username: {} - {}", request.getEmail(), e.getMessage());
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 					.body("{\"error\": \"" + e.getMessage() + "\"}");
 		} catch (Exception e) {
-			logger.error("Unexpected error during login for username: {}", request.getUsername(), e);
+			logger.error("Unexpected error during login for username: {}", request.getEmail(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("{\"error\": \"Internal server error\"}");
 		}
